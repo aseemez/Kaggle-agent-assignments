@@ -1,3 +1,8 @@
+#Let's build a system with two specialized agents:
+
+#Research Agent - Searches for information using Google Search
+#Summarizer Agent - Creates concise summaries from research findings
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -71,3 +76,7 @@ if __name__ == "__main__":
         response = await runner.run_debug(question)
 
     asyncio.run(main())
+
+
+
+#"What are the latest advancements in quantum computing and what do they mean for AI?"

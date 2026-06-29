@@ -1,3 +1,11 @@
+#Let's build a system with three specialized agents:
+
+#Outline Agent - Creates a blog outline for a given topic
+#Writer Agent - Writes a blog post
+#Editor Agent - Edits a blog post draft for clarity and structure
+
+
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -75,6 +83,8 @@ root_agent = SequentialAgent(
 )
 
 print("✅ Sequential Agent created.")
+
+#Write a blog post about the benefits of multi-agent systems for software developers
 
 if __name__ == "__main__":
     question = input("Ask your agent something: ")

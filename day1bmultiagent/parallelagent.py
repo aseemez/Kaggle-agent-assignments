@@ -1,3 +1,10 @@
+#Let's build a system with four agents:
+
+#Tech Researcher - Researches AI/ML news and trends
+#Health Researcher - Researches recent medical news and trends
+#Finance Researcher - Researches finance and fintech news and trends
+#Aggregator Agent - Combines all research findings into a single summary
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -119,3 +126,4 @@ if __name__ == "__main__":
 
     asyncio.run(main())
 
+#Run the daily executive briefing on Tech, Health, and Finance"
