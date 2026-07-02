@@ -17,6 +17,8 @@ import os
 from dotenv import load_dotenv
 import asyncio
 
+from requests import session
+
 
 load_dotenv()  # Load API keys from .env into os.environ before anything else.
 client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
@@ -140,6 +142,7 @@ print("✅ Agent with session state tools initialized!")
 
 if __name__ == "__main__":
     async def main():
+       
         # Test conversation demonstrating session state
         await run_session(
             runner,
@@ -150,6 +153,15 @@ if __name__ == "__main__":
              ],
             "state-demo-session",
 )
+        # Retrieve the session and inspect its state
+        session = await session_service.get_session(
+                    app_name=APP_NAME, user_id=USER_ID, session_id="state-demo-session"
+                )
+
+        print("Session State Contents:")
+        print(session.state)
+        print("\n🔍 Notice the 'user:name' and 'user:country' keys storing our data!")
+
         
 
     asyncio.run(main())
