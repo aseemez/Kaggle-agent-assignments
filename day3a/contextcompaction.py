@@ -125,32 +125,32 @@ print("✅ Research App upgraded with Events Compaction!")
 # Notice: Both queries are part of the SAME session, so context is maintained
 if __name__ == "__main__":
     async def main():
-        await run_session(
-    research_runner_compacting,
-    "What is the latest news about AI in healthcare?",
-    "compaction_demo",
-)
+        await run_session(research_runner_compacting, "What is the latest news about AI in healthcare?", "compaction_demo")
+        await run_session(research_runner_compacting, "Are there any new developments in drug discovery?", "compaction_demo")
+        await run_session(research_runner_compacting, "Tell me more about the second development you found.", "compaction_demo")
+        await run_session(research_runner_compacting, "Who are the main companies involved in that?", "compaction_demo")
 
-# Turn 2
-        await run_session(
-    research_runner_compacting,
-    "Are there any new developments in drug discovery?",
-    "compaction_demo",
-)
+        # Get the final session state
+        final_session = await research_runner_compacting.session_service.get_session(
+            app_name="research_app_compacting",
+            user_id=USER_ID,
+            session_id="compaction_demo",
+        )
 
-# Turn 3 - Compaction should trigger after this turn!
-        await run_session(
-    research_runner_compacting,
-    "Tell me more about the second development you found.",
-    "compaction_demo",
-)
+        print("--- Searching for Compaction Summary Event ---")
+        found_summary = False
+        for event in final_session.events:
+            # Compaction events have a 'compaction' attribute
+            if event.actions and getattr(event.actions, "compaction", None):
+                print("\n✅ SUCCESS! Found the Compaction Event:")
+                print(f"  Author: {event.author}")
+                print(f"\n Compacted information: {event}")
+                found_summary = True
+                break
 
-# Turn 4
-        await run_session(
-    research_runner_compacting,
-    "Who are the main companies involved in that?",
-    "compaction_demo",
-)
+        if not found_summary:
+            print(
+                "\n❌ No compaction event found. Try increasing the number of turns in the demo."
+            )
 
     asyncio.run(main())
-        
